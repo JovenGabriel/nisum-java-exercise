@@ -9,13 +9,14 @@ import com.nisum.users.exceptions.NotFoundException;
 import com.nisum.users.repositories.PhoneRepository;
 import com.nisum.users.repositories.UserRepository;
 import com.nisum.users.service.UserService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +26,13 @@ public class UserServiceImpl implements UserService {
     private final PhoneRepository phoneRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getUserById(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
     }
@@ -40,7 +43,14 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(userCreateDTO.getEmail()).isPresent())
             throw new EmailAlreadyExistsException();
 
-        List<Phone> phones = phoneRepository.saveAll(userCreateDTO.getPhones());
+        List<Phone> phones = userCreateDTO.getPhones().stream().map((phoneDTO) -> Phone.builder()
+                        .number(phoneDTO.getNumber())
+                        .cityCode(phoneDTO.getCitycode())
+                        .countryCode(phoneDTO.getCountrycode())
+                        .build())
+                        .collect(Collectors.toList());
+
+        phoneRepository.saveAll(phones);
 
         User user = User.builder()
                 .name(userCreateDTO.getName())
