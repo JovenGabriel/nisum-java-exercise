@@ -90,17 +90,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Updates an existing user in the system.
-     *
-     * @param user the User object containing updated information
-     * @return the updated User object
-     */
-    @Override
-    public User updateUser(User user) {
-        return null;
-    }
-
-    /**
      * Authenticates a user using their email and password.
      *
      * @param userLoginDTO the data transfer object containing the user's login credentials, including email and password

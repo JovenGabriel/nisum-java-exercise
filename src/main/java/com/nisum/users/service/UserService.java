@@ -12,6 +12,5 @@ public interface UserService {
     List<User> getUsers();
     User getUserById(UUID id);
     User createUser(UserCreateDTO userCreateDTO);
-    User updateUser(User user);
     User login(UserLoginDTO userLoginDTO);
 }
