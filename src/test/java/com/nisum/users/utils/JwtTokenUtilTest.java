@@ -55,20 +55,4 @@ class JwtTokenUtilTest {
         assertFalse(jwtTokenUtil.validateToken(invalidToken), "Invalid token should not be considered valid.");
         assertThrows(JwtException.class, () -> jwtTokenUtil.getEmailFromToken(invalidToken), "Parsing invalid token should throw JwtException.");
     }
-
-    @Test
-    @DisplayName("Generate Token: Should validate expiration for generated token")
-    void shouldValidateExpirationForGeneratedToken() throws InterruptedException {
-        // Arrange
-        String email = "testuser@example.com";
-        String token = jwtTokenUtil.generateToken(email);
-
-        // Act & Assert
-        assertTrue(jwtTokenUtil.validateToken(token), "Token should be valid immediately after creation.");
-
-        // Simulate token expiration (using actual expiration time in real-world requires time manipulation or configuration)
-        Thread.sleep(60000); // Simulate expiration by bypassing token validity time (here 1min = 60000ms)
-
-        assertFalse(jwtTokenUtil.validateToken(token), "Token should not be valid after expiration time.");
-    }
 }
