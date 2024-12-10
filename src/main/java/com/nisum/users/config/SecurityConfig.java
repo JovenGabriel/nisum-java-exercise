@@ -19,13 +19,16 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     /**
-     * Configures the security filter chain for the application, defining which HTTP requests
-     * are permitted without authentication and adding a JWT authentication filter before the
-     * standard UsernamePasswordAuthenticationFilter.
+     * Configures the Spring Security filter chain for the application. This configuration includes:
+     * - Permitting access to specific public endpoints such as login, sign-up, Swagger documentation, H2 console, and actuator endpoints.
+     * - Requiring authentication for all other endpoints.
+     * - Disabling Cross-Site Request Forgery (CSRF) protection.
+     * - Configuring headers to allow frames from the same origin (useful for H2 console).
+     * - Adding a custom JWT authentication filter for processing JWT tokens before the standard authentication filter.
      *
-     * @param http the HttpSecurity object used to configure security settings for the application
-     * @return a configured instance of SecurityFilterChain
-     * @throws Exception if an error occurs while building the security configuration
+     * @param http the HttpSecurity object used to configure security settings for HTTP requests
+     * @return a configured {@code SecurityFilterChain} instance
+     * @throws Exception if there's an issue in configuring the security filter chain
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,9 +49,9 @@ public class SecurityConfig {
     }
 
     /**
-     * Provides a bean of BCryptPasswordEncoder for encoding passwords.
+     * Provides a BCryptPasswordEncoder bean to be used for password encoding in the application.
      *
-     * @return a BCryptPasswordEncoder instance used for hashing passwords.
+     * @return an instance of BCryptPasswordEncoder
      */
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
