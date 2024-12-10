@@ -1,6 +1,7 @@
 package com.nisum.users.controllers;
 
 import com.nisum.users.dto.UserCreateDTO;
+import com.nisum.users.dto.UserCreatedDTO;
 import com.nisum.users.dto.UserLoginDTO;
 import com.nisum.users.entities.User;
 import com.nisum.users.service.UserService;
@@ -43,14 +44,22 @@ public class UserController {
     }
 
     /**
-     * Creates a new user based on the provided user information.
+     * Creates a new user and returns the created user details.
      *
-     * @param userCreateDTO the DTO containing the details for the user to be created, must not be null and must be valid
-     * @return a ResponseEntity containing the newly created User object and a CREATED HTTP status
+     * @param userCreateDTO the data transfer object containing user creation details
+     * @return a ResponseEntity containing the created user's details encapsulated in a UserCreatedDTO
      */
     @PostMapping
-    private ResponseEntity<User> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userCreateDTO));
+    private ResponseEntity<UserCreatedDTO> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
+        User user = userService.createUser(userCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserCreatedDTO.builder()
+                        .id(user.getId())
+                        .createdAt(user.getCreatedAt())
+                        .updatedAt(user.getUpdatedAt())
+                        .lastLogin(user.getLastLogin())
+                        .token(user.getToken())
+                        .isActive(user.isActive())
+                        .build());
     }
     
     /**
