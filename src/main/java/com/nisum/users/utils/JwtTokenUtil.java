@@ -20,8 +20,8 @@ public class JwtTokenUtil {
      * @return a signed JWT as a String
      */
     public String generateToken(String email) {
-        // 1 hora
-        long EXPIRATION_TIME = 1000 * 60 * 60;
+        // 1 Minute
+        long EXPIRATION_TIME = 1000 * 60;
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())

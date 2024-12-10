@@ -1,6 +1,7 @@
 package com.nisum.users.utils;
 
 import jakarta.validation.ConstraintValidatorContext;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -17,7 +18,9 @@ public class PasswordValidatorTest {
      */
     private final PasswordValidator passwordValidator = new PasswordValidator();
 
+
     @Test
+    @DisplayName("Validating null value")
     public void testIsValidWithNullValue() {
         // Arrange
         ConstraintValidatorContext context = Mockito.mock(ConstraintValidatorContext.class);
@@ -31,7 +34,9 @@ public class PasswordValidatorTest {
         assertFalse(result);
     }
 
+
     @Test
+    @DisplayName("Validating empty password")
     public void testIsValidWithEmptyValue() {
         // Arrange
         ConstraintValidatorContext context = Mockito.mock(ConstraintValidatorContext.class);
@@ -44,7 +49,9 @@ public class PasswordValidatorTest {
         assertTrue(result);
     }
 
+
     @Test
+    @DisplayName("Validating password with matching pattern")
     public void testIsValidWithMatchingPattern() {
         // Arrange
         String validPassword = "Valid123!";
@@ -59,7 +66,9 @@ public class PasswordValidatorTest {
         assertTrue(result);
     }
 
+
     @Test
+    @DisplayName("Validating password with non-matching pattern")
     public void testIsValidWithNonMatchingPattern() {
         // Arrange
         String invalidPassword = "InvalidPassword";

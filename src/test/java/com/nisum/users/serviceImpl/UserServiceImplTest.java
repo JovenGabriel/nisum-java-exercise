@@ -1,13 +1,14 @@
 package com.nisum.users.serviceImpl;
 
-import com.nisum.users.dto.UserCreateDTO;
 import com.nisum.users.dto.PhoneDTO;
+import com.nisum.users.dto.UserCreateDTO;
 import com.nisum.users.dto.UserLoginDTO;
 import com.nisum.users.entities.User;
 import com.nisum.users.exceptions.EmailAlreadyExistsException;
 import com.nisum.users.exceptions.NotFoundException;
 import com.nisum.users.repositories.UserRepository;
 import com.nisum.users.utils.JwtTokenUtil;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -15,13 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for the UserServiceImpl class. This test class uses Mockito for mocking dependencies
@@ -67,6 +66,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test successful user creation")
     void testCreateUserSuccessfully() {
         // Arrange
         UserCreateDTO userCreateDTO = new UserCreateDTO();
@@ -100,6 +100,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test throwing exception when email already exists during user creation")
     void testCreateUserThrowsEmailAlreadyExistsException() {
         // Arrange
         UserCreateDTO userCreateDTO = new UserCreateDTO();
@@ -128,6 +129,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test successful user login")
     void testLoginSuccessfully() {
         // Arrange
         UserCreateDTO userCreateDTO = new UserCreateDTO();
@@ -154,6 +156,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test throwing exception for login attempt with invalid email")
     void testLoginWithInvalidEmailThrowsNotFoundException() {
         // Arrange
         UserLoginDTO userLoginDTO = new UserLoginDTO();
@@ -167,6 +170,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test throwing exception for login attempt with invalid password")
     void testLoginWithInvalidPasswordThrowsNotFoundException() {
         // Arrange
         UserLoginDTO userLoginDTO = new UserLoginDTO();
@@ -183,5 +187,16 @@ public class UserServiceImplTest {
 
         // Act & Assert
         assertThrows(NotFoundException.class, () -> userServiceImpl.login(userLoginDTO));
+    }
+
+    @Test
+    @DisplayName("Test throwing exception when user not found by ID")
+    void testGetUserByIdThrowsNotFoundException() {
+        // Arrange
+        UUID userId = UUID.randomUUID();
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(NotFoundException.class, () -> userServiceImpl.getUserById(userId));
     }
 }
