@@ -14,7 +14,13 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    //Validation NotNull, NotBlank, NotEmpty, Pattern
+    /**
+     * Handles validation exceptions by constructing a response entity with details of validation errors.
+     *
+     * @param ex the MethodArgumentNotValidException exception that contains details about validation failures
+     * @return a ResponseEntity containing a map with error information and field-specific error messages,
+     *         with an HTTP status of Bad Request
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, Object> errorResponse = new LinkedHashMap<>();
@@ -29,6 +35,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
+    /**
+     * Handles NotFoundException and constructs a response entity with error details.
+     *
+     * @param ex the NotFoundException thrown when a requested resource is not found
+     * @return a ResponseEntity containing a map with error information and a status of 404 Not Found
+     */
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFoundException(NotFoundException ex) {
         Map<String, String> errorResponse = new HashMap<>();
@@ -37,6 +49,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
+    /**
+     * Handles the EmailAlreadyExistsException by returning a response entity
+     * with a conflict status and an error message.
+     *
+     * @param ex the exception thrown when an email already exists
+     * @return a ResponseEntity containing the error details and HTTP status
+     */
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
         Map<String, String> errorResponse = new HashMap<>();

@@ -1,0 +1,22 @@
+#spring:
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: "http://127.0.0.1:8090"
+#      client:
+#        registration:
+#          client-app:
+#            provider: spring
+#            client-id: app-client
+#            client-secret: 123456
+#            authorization-grant-type: authorization_code
+#            redirect-uri: "http://127.0.0.1:8082/authorized"
+#            scope:
+#              - openid
+#              - profile
+#              - read
+#            client-name: app-client
+#        provider:
+#          spring:
+#            issuer-uri: "http://127.0.0.1:8090"

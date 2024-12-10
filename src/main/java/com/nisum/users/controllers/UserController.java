@@ -1,10 +1,12 @@
 package com.nisum.users.controllers;
 
 import com.nisum.users.dto.UserCreateDTO;
+import com.nisum.users.dto.UserLoginDTO;
 import com.nisum.users.entities.User;
 import com.nisum.users.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,13 @@ public class UserController {
 
     @PostMapping
     private ResponseEntity<User> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
-        return ResponseEntity.ok(userService.createUser(userCreateDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userCreateDTO));
     }
+    
+    @PostMapping("/login")
+    private ResponseEntity<User> loginUser(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+        return ResponseEntity.ok(userService.login(userLoginDTO));
+    }
+    
+    
 }
