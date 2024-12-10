@@ -1,8 +1,8 @@
-### Building and running your application
+### Building and running the application
 
 #### Using Docker Compose
 
-When you're ready, start your application by running:
+When you're ready, start the application by running:
 `docker compose up --build`.
 
 #### Using Command Line
@@ -15,19 +15,19 @@ Then, start your application with the following command:
 
 ### Using Maven
 
-You can also use Maven to package your application. Run the following command:
+You can also use Maven to package the application. Run the following command:
 `mvn clean package`.
-This will generate a JAR file in the `target` directory. You can then run your application with:
+This will generate a JAR file in the `target` directory. You can then run the application with:
 `java -jar target/<name-of-your-jar>.jar`.
 Replace `<name-of-your-jar>` with `users-0.0.1-SNAPSHOT.jar`.
 
-Your application will be available at http://localhost:8080.
+The application will be available at http://localhost:8080.
 
 ### Testing your Application
 
 #### API Endpoints Overview
 
-To test your application's API, you can use tools like **Postman**, **cURL**, or the Swagger UI available at:  
+To test the application's API, you can use tools like **Postman**, **cURL**, or the Swagger UI available at:  
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
 
 Here is a step-by-step guide for testing the main endpoints:
@@ -137,11 +137,11 @@ You can use the provided Swagger UI URL to explore these endpoints and see addit
 headers, and request/response formats.  
 URL: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 ---
-### Construyendo y ejecutando tu aplicación
+### Construyendo y ejecutando la aplicación
 
 #### Usando Docker Compose
 
-Cuando estés listo, inicia tu aplicación ejecutando:  
+Cuando estés listo, inicia la aplicación ejecutando:  
 `docker compose up --build`.
 
 #### Usando la línea de comandos
@@ -149,20 +149,20 @@ Cuando estés listo, inicia tu aplicación ejecutando:
 Para construir la imagen de Docker, ejecuta:  
 `docker build -t myapp .`.
 
-Luego, inicia tu aplicación con el siguiente comando:  
+Luego, inicia la aplicación con el siguiente comando:  
 `docker run -p 8080:8080 myapp`.
 
 ### Usando Maven
 
-También puedes usar Maven para empaquetar tu aplicación. Ejecuta el siguiente comando:  
+También puedes usar Maven para empaquetar la aplicación. Ejecuta el siguiente comando:  
 `mvn clean package`.  
-Esto generará un archivo JAR en el directorio `target`. Luego, puedes ejecutar tu aplicación con:  
+Esto generará un archivo JAR en el directorio `target`. Luego, puedes ejecutar la aplicación con:  
 `java -jar target/<nombre-del-jar>.jar`.  
 Reemplaza `<nombre-del-jar>` con `users-0.0.1-SNAPSHOT.jar`.
 
-Tu aplicación estará disponible en http://localhost:8080.
+La aplicación estará disponible en http://localhost:8080.
 
-### Probando tu aplicación
+### Probando la aplicación
 
 #### Descripción general de los endpoints de la API
 
