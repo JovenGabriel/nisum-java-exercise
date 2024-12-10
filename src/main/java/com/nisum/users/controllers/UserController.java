@@ -82,11 +82,11 @@ public class UserController {
      * @param userLoginDTO the DTO containing the user's email and password for authentication
      * @return a ResponseEntity containing the authenticated User
      * @throws 400 Bad Request if the input login credentials are invalid
-     * @throws 404 Not Found if the user with email and password not matches
+     * @throws 404 Not Found if the user with email and/or password not matches
      */
     @Operation(summary = "User login", description = "Authenticates a user based on their email and password")
     @ApiResponse(responseCode = "200", description = "User successfully authenticated")
-    @ApiResponse(responseCode = "404", description = "Not Found if the user with email and password not matches", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\"error\": \"Not found\" , \n \"message\": \"Invalid email or password\"}")))
+    @ApiResponse(responseCode = "404", description = "Not Found if the user with email and/or password not matches", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\"error\": \"Not found\" , \n \"message\": \"Invalid email or password\"}")))
     @PostMapping("/login")
     private ResponseEntity<User> loginUser(@Valid @RequestBody UserLoginDTO userLoginDTO) {
         return ResponseEntity.ok(userService.login(userLoginDTO));

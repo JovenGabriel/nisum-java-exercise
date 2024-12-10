@@ -276,3 +276,7 @@ Aquí tienes una guía paso a paso para probar los endpoints principales:
 Puedes usar la URL de Swagger UI proporcionada para explorar estos endpoints y ver detalles adicionales sobre los datos
 requeridos, encabezados y formatos de solicitud/respuesta.  
 URL: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+### Diagrama de flujo creación de usuario
+
+![Diagrama_de_flujo_nisum.png](src/main/resources/static/Diagrama_de_flujo_nisum.png)
