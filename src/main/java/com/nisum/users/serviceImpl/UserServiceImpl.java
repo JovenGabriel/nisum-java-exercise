@@ -11,7 +11,6 @@ import com.nisum.users.repositories.UserRepository;
 import com.nisum.users.service.UserService;
 import com.nisum.users.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +54,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    /**
+     * Creates a new user in the system using the provided UserCreateDTO. This method verifies if
+     * the email is already taken, encodes the user's password, and generates a JWT token for the user.
+     *
+     * @param userCreateDTO the data transfer object containing user information for creation
+     * @return the newly created User entity
+     * @throws EmailAlreadyExistsException if a user with the specified email already exists
+     */
     @Override
     @Transactional
     public User createUser(UserCreateDTO userCreateDTO) {
@@ -82,11 +89,24 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Updates an existing user in the system.
+     *
+     * @param user the User object containing updated information
+     * @return the updated User object
+     */
     @Override
     public User updateUser(User user) {
         return null;
     }
 
+    /**
+     * Authenticates a user using their email and password.
+     *
+     * @param userLoginDTO the data transfer object containing the user's login credentials, including email and password
+     * @return the authenticated User with an updated token and last login time
+     * @throws NotFoundException if the email or password is incorrect
+     */
     @Override
     @Transactional
     public User login(UserLoginDTO userLoginDTO) {

@@ -13,6 +13,14 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
     @Value("${validation.password.message}")
     private String message;
 
+    /**
+     * Validates if the given string value matches a predefined pattern.
+     * Updates the constraint violation message if the value is invalid.
+     *
+     * @param value the string value to be validated
+     * @param context the context in which the constraint is evaluated
+     * @return true if the string value matches the pattern, false otherwise
+     */
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {

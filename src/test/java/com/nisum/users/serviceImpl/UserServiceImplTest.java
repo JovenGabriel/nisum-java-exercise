@@ -7,10 +7,8 @@ import com.nisum.users.entities.User;
 import com.nisum.users.exceptions.EmailAlreadyExistsException;
 import com.nisum.users.exceptions.NotFoundException;
 import com.nisum.users.repositories.UserRepository;
-import com.nisum.users.repositories.PhoneRepository;
 import com.nisum.users.utils.JwtTokenUtil;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +23,35 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Unit tests for the UserServiceImpl class. This test class uses Mockito for mocking dependencies
+ * and SpringBootTest for integration with the Spring TestContext framework. The tests are designed
+ * to validate the functionality of creating users, handling scenarios such as email already exists,
+ * and user login functionalities.
+ * <p>
+ * Mocks:
+ * - UserRepository: Mocked to simulate user persistence interactions.
+ * - PhoneRepository: Mocked to simulate phone persistence interactions.
+ * - BCryptPasswordEncoder: Mocked to simulate password encoding.
+ * - JwtTokenUtil: Mocked to simulate JWT token operations.
+ * <p>
+ * Injects:
+ * - UserServiceImpl: The service being tested, which has its dependencies injected as mocks.
+ * <p>
+ * Methods tested:
+ * - testCreateUserSuccessfully: Tests the successful creation of a user ensuring all attributes are properly set.
+ * - testCreateUserThrowsEmailAlreadyExistsException: Tests that creating a user with an existing email throws the correct exception.
+ * - testLoginSuccessfully: Verifies that a user can log in successfully and receive a valid token.
+ * - testLoginWithInvalidEmailThrowsNotFoundException: Confirms that attempting to log in with an invalid email will throw a NotFoundException.
+ * - testLoginWithInvalidPasswordThrowsNotFoundException: Checks that logging in with a valid email but invalid password throws a NotFoundException.
+ * <p>
+ * The test methods use assertions to confirm the expected behavior, including successful operations and exception handling.
+ */
 @SpringBootTest
 public class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
-
-    @Mock
-    private PhoneRepository phoneRepository;
 
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
@@ -85,7 +104,7 @@ public class UserServiceImplTest {
         // Arrange
         UserCreateDTO userCreateDTO = new UserCreateDTO();
         userCreateDTO.setName("John Doe");
-        userCreateDTO.setEmail("john.doe@example.com");
+        userCreateDTO.setEmail("john@example.com");
         userCreateDTO.setPassword("Password123!");
 
         List<PhoneDTO> phones = new ArrayList<>();
@@ -96,7 +115,7 @@ public class UserServiceImplTest {
 
         UserCreateDTO userCreateDTO2 = new UserCreateDTO();
         userCreateDTO2.setName("John Doe");
-        userCreateDTO2.setEmail("john.doe@example.com");
+        userCreateDTO2.setEmail("john@example.com");
         userCreateDTO2.setPassword("Password123!");
 
         List<PhoneDTO> phones2 = new ArrayList<>();
@@ -113,7 +132,7 @@ public class UserServiceImplTest {
         // Arrange
         UserCreateDTO userCreateDTO = new UserCreateDTO();
         userCreateDTO.setName("John Doe");
-        userCreateDTO.setEmail("john.doe@example.com");
+        userCreateDTO.setEmail("john.doe@example.cl");
         userCreateDTO.setPassword("Password123!");
 
         List<PhoneDTO> phones = new ArrayList<>();
@@ -123,7 +142,7 @@ public class UserServiceImplTest {
         userServiceImpl.createUser(userCreateDTO);
 
         UserLoginDTO userLoginDTO = new UserLoginDTO();
-        userLoginDTO.setEmail("john.doe@example.com");
+        userLoginDTO.setEmail("john.doe@example.cl");
         userLoginDTO.setPassword("Password123!");
 
         // Act

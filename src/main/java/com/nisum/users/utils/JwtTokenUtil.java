@@ -11,10 +11,17 @@ import java.util.Date;
 public class JwtTokenUtil {
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
 
 
+    /**
+     * Generates a JSON Web Token (JWT) for the specified email.
+     *
+     * @param email the email for which the token is to be generated
+     * @return a signed JWT as a String
+     */
     public String generateToken(String email) {
+        // 1 hora
+        long EXPIRATION_TIME = 1000 * 60 * 60;
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
@@ -23,6 +30,12 @@ public class JwtTokenUtil {
                 .compact();
     }
 
+    /**
+     * Validates the provided JWT token by verifying its signature and claims.
+     *
+     * @param token the JWT token to be validated
+     * @return true if the token is valid and properly signed, false otherwise
+     */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -32,6 +45,12 @@ public class JwtTokenUtil {
         }
     }
 
+    /**
+     * Extracts the email address from the provided JWT token.
+     *
+     * @param token the JWT token from which to extract the email
+     * @return the email address contained within the token's subject field
+     */
     public String getEmailFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)

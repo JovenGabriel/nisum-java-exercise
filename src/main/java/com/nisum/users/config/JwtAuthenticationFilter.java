@@ -28,6 +28,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String BEARER_PREFIX = "Bearer ";
 
+    /**
+     * Filters incoming HTTP requests, checking for a Bearer token in the Authorization header.
+     * If a valid Bearer token is found, the token is authenticated.
+     *
+     * @param request the HttpServletRequest object, providing request information for HTTP servlets
+     * @param response the HttpServletResponse object, assisting a servlet in sending a response to the client
+     * @param filterChain the FilterChain object, allowing the filter to pass on the request and response to the next entity in the chain
+     * @throws ServletException if an exception occurs that interferes with the filter's operation
+     * @throws IOException if an I/O error occurs during the handling of the request
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -40,6 +50,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Authenticates a JWT token by validating its signature and verifying the token's
+     * association with a user in the system. If valid, sets the Spring Security context
+     * with the authenticated user's details.
+     *
+     * @param token the JWT token to be authenticated
+     */
     private void authenticateToken(String token) {
         if (jwtTokenUtil.validateToken(token)) {
             String email = jwtTokenUtil.getEmailFromToken(token);

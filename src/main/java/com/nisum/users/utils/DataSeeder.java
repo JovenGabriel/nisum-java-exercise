@@ -14,6 +14,12 @@ public class DataSeeder implements CommandLineRunner {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * Checks the existence of an admin user by email and creates a new admin user
+     * with predefined credentials and properties if not present in the system storage.
+     *
+     * @param args command line arguments passed to the execution context; not used in this implementation
+     */
     @Override
     public void run(String... args) {
 
